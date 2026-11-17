@@ -1,0 +1,56 @@
+# ==============================================================================
+# DISHA AI - Git Ignore
+# ==============================================================================
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Environments
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment Variables & Secrets
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# SQLite Runtime Journals and Temp DBs
+*.db-journal
+*.db-wal
+*.db-shm
+test_*.db
+test.db
+
+# Node.js & Frontend Build Outputs
+node_modules/
+.npm/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+dist-ssr/
+*.local
+
+# IDE & OS Files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~

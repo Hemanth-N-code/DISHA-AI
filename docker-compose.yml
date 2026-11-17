@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: disha-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: disha
+      POSTGRES_PASSWORD: dishapassword
+      POSTGRES_DB: disha_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U disha -d disha_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: disha-backend
+    restart: always
+    environment:
+      - DATABASE_URL=postgresql://disha:dishapassword@db:5432/disha_db
+      - LLM_PROVIDER=offline
+      - SECRET_KEY=disha-ai-secret-key-change-in-production-2026
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./data:/app/data
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: disha-frontend
+    restart: always
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
